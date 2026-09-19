@@ -270,26 +270,44 @@ class Parashah(NarrationText):
 			episode_index = 0
 			for paragraph_data in content:
 				while (episode_index < len(self.episodes) and
-						verse_index < len(self.episodes[episode_index].verses)):
+						verse_index >= len(self.episodes[episode_index].verses)):
 					episode_index += 1
 					verse_index = 0
 				if episode_index >= len(self.episodes):
 					break
 				episode = self.episodes[episode_index]
 				paragraph = Paragraph(episode, len(episode.paragraphs) + 1)
+				paragraph_appended = False
 
-				for verse_lines in paragraph_data[episode_index]:
-					print (f"verse index {verse_index}")
-					if verse_index < len(episode.verses):
-						lines = verse_lines#[1]
-						paragraph.verses[verse_index].text = '\n'.join(lines)
-						#verse = episode.verses[verse_index]
-						#self.parashot.bible.books[verse.chapter.book.number - 1].chapters[verse.chapter.number - 1].verses[verse.number - 1] = '\n'.join(lines)
-					
+				for verse_entry in paragraph_data:
+					# a markdown paragraph can span an episode boundary: once the
+					# current episode's verses are exhausted, close it off and
+					# continue the same markdown paragraph as a new one on the
+					# next episode.
+					while (episode_index < len(self.episodes) and
+							verse_index >= len(self.episodes[episode_index].verses)):
+						if paragraph.verses and not paragraph_appended:
+							episode.paragraphs.append(paragraph)
+							paragraph_appended = True
+						episode_index += 1
+						verse_index = 0
+						if episode_index >= len(self.episodes):
+							break
+						episode = self.episodes[episode_index]
+						paragraph = Paragraph(episode, len(episode.paragraphs) + 1)
+						paragraph_appended = False
+					if episode_index >= len(self.episodes):
+						break
+
+					lines = verse_entry[1]
+					episode.verses[verse_index].text = '\n'.join(lines)
 					paragraph.verses.append(episode.verses[verse_index])
 					verse_index += 1
-				if paragraph.verses:
+
+				if paragraph.verses and not paragraph_appended:
 					episode.paragraphs.append(paragraph)
+				if episode_index >= len(self.episodes):
+					break
 		else:
 			#print ("NO")
 			#print (content)
