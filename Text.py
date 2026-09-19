@@ -1,5 +1,4 @@
 from pathlib import Path
-import Hebrew
 
 ROOT = Path(__file__).parent
 
@@ -101,7 +100,6 @@ class PoemText(Text):
 		super().__init__(path)
 
 	def parse(self, content):
-		content = Hebrew.normalize(content)
 		result = []
 		verse_number = 1
 		paragraphs = content.split('\n\n\n')
@@ -122,17 +120,16 @@ class PoemText(Text):
 		return result
 
 	def serialize(self, structure):
-		lines = []
+		paragraph_texts = []
 		for paragraph in structure:
-			for verse_idx, verse in enumerate(paragraph):
-				verse_lines = verse[1]
-				lines.extend(verse_lines)
-				if verse_idx < len(paragraph) - 1:
-					lines.append('')
-			lines.append('')
-		if lines and lines[-1] == '':
-			lines.pop()
-		return '\n'.join(lines)
+			verse_texts = []
+			for verse in paragraph:
+				lines = verse[1]
+				marked = [line + '  ' if i < len(lines) - 1 else line
+						  for i, line in enumerate(lines)]
+				verse_texts.append('\n'.join(marked))
+			paragraph_texts.append('\n\n'.join(verse_texts))
+		return '\n\n\n'.join(paragraph_texts)
 
 class NarrationText(Text):
 	def __init__(self, path):
