@@ -63,13 +63,13 @@ class Psalm(PoemText):
 	@property
 	def previous(self):
 		if self.number > 1:
-			return self.psalms.items[self.number - 2]
+			return self.psalms[self.number - 2]
 		return None
 
 	@property
 	def next(self):
-		if self.number < len(self.psalms.items):
-			return self.psalms.items[self.number]
+		if self.number < len(self.psalms):
+			return self.psalms[self.number]
 		return None
 
 
@@ -106,27 +106,6 @@ class Psalm(PoemText):
 				r, g, b = colorsys.hls_to_rgb(h, l, s)
 				return (int(r * 255), int(g * 255), int(b * 255))
 		return (128, 128, 128)
-
-	@property
-	def oldcolor(self):
-		total_duration = 0.0
-		for verse in self.verses:
-			total_duration += self.psalms.bible.audio.cloned_duration(27, self.number, verse.number)
-		if total_duration < 50:
-			return (100, 200, 100)
-		elif total_duration > 300:
-			return (200, 100, 100)
-		normalized = (total_duration - 50) / 250
-		hue = 120 * (1 - normalized)
-		if hue <= 60:
-			r = 200
-			g = 100 + (hue / 60) * 100
-			b = 100
-		else:
-			r = 200 - ((hue - 60) / 60) * 100
-			g = 200
-			b = 100
-		return (int(r), int(g), int(b))
 
 	def load(self):
 		#print(self.psalms.bible.books)
@@ -184,20 +163,11 @@ class Psalms:
 		return "Psalms"
 
 
-	def _iter__(self):
-		#self.index = 0
-		return self
+	def __iter__(self):
+		return iter(self._items)
 
 	def __len__(self):
-		#self.index = 0
 		return len(self._items)
-
-	def _next__(self):
-		if self.index >= len(self._items):
-			raise StopIteration
-		value = self._item[self.index]
-		self.index += 1
-		return value
 
 
 
@@ -233,33 +203,6 @@ class Psalms:
 						psalm.hebrew_title = he_title
 						psalm.hebrew_description = he_desc
 			i += 1
-
-	@property
-	def color(self):
-		colors = [
-			(65, 105, 225), # Book 1 Royal Blue
-			(34, 139, 34),	# Book 2 Forest Green
-			(178, 34, 34),	# Book 3 Firebrick Red
-			(255, 215, 0),	# Book 4 Gold
-			(75, 0, 130)	  # Book 5 Indigo
-		]
-		if self.number <= 41:
-			book_index, total_in_book, position = 0, 41, self.number
-		elif self.number <= 72:
-			book_index, total_in_book, position = 1, 31, self.number - 41
-		elif self.number <= 89:
-			book_index, total_in_book, position = 2, 17, self.number - 72
-		elif self.number <= 106:
-			book_index, total_in_book, position = 3, 17, self.number - 89
-		else:
-			book_index, total_in_book, position = 4, 44, self.number - 106
-		r, g, b = colors[book_index]
-		progress = (position - 1) / (total_in_book - 1) if total_in_book > 1 else 0.5
-		h, l, s = colorsys.rgb_to_hls(r/255, g/255, b/255)
-		lightness = 0.4 + (0.4 * progress)
-		l = max(0, min(1, lightness))
-		r, g, b = colorsys.hls_to_rgb(h, l, s)
-		return (int(r*255), int(g*255), int(b*255))
 
 if __name__ == "__main__":
 	from Bible import Bible
