@@ -136,7 +136,7 @@ class Psalm(PoemText):
 			for verse in paragraph.verses:
 				verse_lines = []
 				for line_words in verse.words:
-					line = [Word(word, verse) for word in line_words]
+					line = [Word(word, verse, spacer) for word, spacer in line_words]
 					verse_lines.append(line)
 				verses.append(verse_lines)
 			paragraphs.append(verses)

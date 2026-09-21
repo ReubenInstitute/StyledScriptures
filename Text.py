@@ -3,8 +3,9 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 
 class Word:
-	def __init__(self, text, verse=None):
+	def __init__(self, text, verse=None, spacer=' '):
 		self.verse = verse
+		self.spacer = spacer
 		self.full_text = text
 		self.text = self.full_text.replace('^', '\u05BD').replace('$', '').replace('ˇ', '').replace('**', '')
 

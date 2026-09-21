@@ -102,7 +102,7 @@ class ParashahEpisode():
 			lines = []
 			for verse in paragraph.verses:
 				for line_words in verse.words:
-					line = [Word(word, verse) for word in line_words]
+					line = [Word(word, verse, spacer) for word, spacer in line_words]
 					lines.append(line)
 			original.append(lines)
 		layout = []
@@ -147,7 +147,7 @@ class ParashahEpisode():
 				lines = []
 				for verse in verses:
 					for line_words in verse.words:
-						line = [Word(word, verse) for word in line_words]
+						line = [Word(word, verse, spacer) for word, spacer in line_words]
 						lines.append(line)
 				# Merge consecutive lines that belong to the same verse
 				merged = []
