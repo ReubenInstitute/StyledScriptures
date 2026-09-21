@@ -3,6 +3,7 @@ import pandas as pd
 from pathlib import Path
 import colorsys
 import HebrewNumbers
+import Hebrew
 #from PDF import ParashahBookletPDF
 #from Overlay import EpisodeOverlay
 #from Audio import ParashahAudio
@@ -206,7 +207,8 @@ class Parashah(NarrationText):
 		self.metadata = metadata
 		self.number = int(metadata['number'])
 		self.english_name = metadata['english_name']
-		self.hebrew_name = metadata['hebrew_name']
+		self.hebrew_full_name = metadata['hebrew_name']
+		self.hebrew_name = Hebrew.strip_diacritics(self.hebrew_full_name)
 		self.book = parashot.bible.books[int(metadata['book']) - 1]
 		NarrationText.__init__(self, f"parashot/{self.number:02d}.md")
 		self.english_title = ""
