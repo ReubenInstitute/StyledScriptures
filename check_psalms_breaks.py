@@ -39,12 +39,22 @@ def check(path):
 			continue
 		blank_run = 0
 		block.append((number, line))
+		text = line
+		if line.endswith("  "):
+			if line.endswith("   "):
+				problems.append(f"{path}:{number}: more than two trailing spaces")
+			text = line[:-2]
+		else:
+			is_last_of_file = number == len(lines)
+			next_is_blank = number < len(lines) and lines[number] == ""
+			if not (is_last_of_file or next_is_blank):
+				problems.append(f"{path}:{number}: text line does not end with two spaces")
+		if "  " in text:
+			problems.append(f"{path}:{number}: multiple consecutive spaces in text")
+		if text.endswith(" "):
+			problems.append(f"{path}:{number}: stray trailing space in text")
 		if line.endswith("  "):
 			continue
-		is_last_of_file = number == len(lines)
-		next_is_blank = number < len(lines) and lines[number] == ""
-		if not (is_last_of_file or next_is_blank):
-			problems.append(f"{path}:{number}: text line does not end with two spaces")
 	if block:
 		last_number, last_line = block[-1]
 		if last_line.endswith("  "):

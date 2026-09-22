@@ -42,6 +42,13 @@ class TextStore:
 	def get(self, path):
 		return self._cache.get(path)
 
+	def reload(self, path):
+		f = self.base / path
+		if f.exists():
+			self._cache[path] = f.read_text(encoding="utf-8")
+		elif path in self._cache:
+			del self._cache[path]
+
 	def set(self, path, content):
 		f = self.base / path
 		f.parent.mkdir(parents=True, exist_ok=True)

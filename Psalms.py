@@ -110,6 +110,7 @@ class Psalm(PoemText):
 	def load(self):
 		#print(self.psalms.bible.books)
 		#exit()
+		self.store.reload(self.path)
 		book = self.psalms.bible.books[26]
 		chapter = book.chapters[self.number - 1]
 		verses = chapter.verses
