@@ -8,6 +8,7 @@ REPO_ROOT="$(pwd)"
 VERSION="0.$(git rev-list --count HEAD)"
 sed -i "s/^Version: .*/Version: $VERSION/" packaging/deb/control-styledscriptures
 sed -i "s/^Version: .*/Version: $VERSION/" packaging/deb/control-styledscriptures-data
+sed -i "s/^Version: .*/Version: $VERSION/" packaging/deb/control-styledscriptures-web
 sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
 
 # --- python3-styledscriptures (code) ---
@@ -37,3 +38,17 @@ cp text/parashot/*.md "$DATA_DIR/var/lib/styledscriptures/parashot/"
 dpkg-deb --build --root-owner-group "$DATA_DIR" "styledscriptures-data_${VERSION}_all.deb"
 rm -rf "$DATA_DIR"
 echo "Built styledscriptures-data_${VERSION}_all.deb"
+
+# --- styledscriptures-web (Flask app) ---
+WEB_DIR="$REPO_ROOT/debian-pkg-styledscriptures-web"
+rm -rf "$WEB_DIR"
+mkdir -p "$WEB_DIR/DEBIAN" "$WEB_DIR/usr/share/styledscriptures" "$WEB_DIR/usr/bin" \
+	"$WEB_DIR/usr/share/doc/styledscriptures-web"
+cp packaging/deb/control-styledscriptures-web "$WEB_DIR/DEBIAN/control"
+cp styledscriptures-web.py "$WEB_DIR/usr/share/styledscriptures/styledscriptures-web.py"
+chmod +x "$WEB_DIR/usr/share/styledscriptures/styledscriptures-web.py"
+ln -s ../share/styledscriptures/styledscriptures-web.py "$WEB_DIR/usr/bin/styledscriptures-web"
+cp GPL-3 "$WEB_DIR/usr/share/doc/styledscriptures-web/copyright"
+dpkg-deb --build --root-owner-group "$WEB_DIR" "styledscriptures-web_${VERSION}_all.deb"
+rm -rf "$WEB_DIR"
+echo "Built styledscriptures-web_${VERSION}_all.deb"

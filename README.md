@@ -11,3 +11,6 @@ video.
 - `python3-styledscriptures` / `StyledScriptures` (pip) — code, GPL-3.
 - `styledscriptures-web` — code, GPL-3.
 - `styledscriptures-data` — styling copyleft Reuben Institute.
+
+`styledscriptures-web` is a placeholder for now — the Flask app itself is
+not yet implemented.
