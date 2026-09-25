@@ -13,9 +13,11 @@ sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
 # --- python3-styledscriptures (code) ---
 CODE_DIR="$REPO_ROOT/debian-pkg-styledscriptures"
 rm -rf "$CODE_DIR"
-mkdir -p "$CODE_DIR/DEBIAN" "$CODE_DIR/usr/lib/python3/dist-packages"
+mkdir -p "$CODE_DIR/DEBIAN" "$CODE_DIR/usr/lib/python3/dist-packages" \
+	"$CODE_DIR/usr/share/doc/python3-styledscriptures"
 cp packaging/deb/control-styledscriptures "$CODE_DIR/DEBIAN/control"
 cp Text.py Psalms.py Parashot.py "$CODE_DIR/usr/lib/python3/dist-packages/"
+cp GPL-3 "$CODE_DIR/usr/share/doc/python3-styledscriptures/copyright"
 dpkg-deb --build --root-owner-group "$CODE_DIR" "python3-styledscriptures_${VERSION}_all.deb"
 rm -rf "$CODE_DIR"
 echo "Built python3-styledscriptures_${VERSION}_all.deb"
