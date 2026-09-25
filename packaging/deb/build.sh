@@ -20,16 +20,18 @@ dpkg-deb --build --root-owner-group "$CODE_DIR" "python3-styledscriptures_${VERS
 rm -rf "$CODE_DIR"
 echo "Built python3-styledscriptures_${VERSION}_all.deb"
 
-# --- styledscriptures-data (markdown + csv) ---
+# --- styledscriptures-data (static reference data + editable text/metadata) ---
 DATA_DIR="$REPO_ROOT/debian-pkg-styledscriptures-data"
 rm -rf "$DATA_DIR"
 mkdir -p "$DATA_DIR/DEBIAN" "$DATA_DIR/usr/share/styledscriptures/csv" \
-	"$DATA_DIR/usr/share/styledscriptures/psalms" "$DATA_DIR/usr/share/styledscriptures/parashot"
+	"$DATA_DIR/var/lib/styledscriptures/csv" \
+	"$DATA_DIR/var/lib/styledscriptures/psalms" "$DATA_DIR/var/lib/styledscriptures/parashot"
 cp packaging/deb/control-styledscriptures-data "$DATA_DIR/DEBIAN/control"
-cp episodes.csv parashot.csv "$DATA_DIR/usr/share/styledscriptures/csv/"
-cp parashot.md psalms.md "$DATA_DIR/usr/share/styledscriptures/"
-cp text/psalms/*.md "$DATA_DIR/usr/share/styledscriptures/psalms/"
-cp text/parashot/*.md "$DATA_DIR/usr/share/styledscriptures/parashot/"
+cp parashot.csv "$DATA_DIR/usr/share/styledscriptures/csv/"
+cp episodes.csv "$DATA_DIR/var/lib/styledscriptures/csv/"
+cp parashot.md psalms.md "$DATA_DIR/var/lib/styledscriptures/"
+cp text/psalms/*.md "$DATA_DIR/var/lib/styledscriptures/psalms/"
+cp text/parashot/*.md "$DATA_DIR/var/lib/styledscriptures/parashot/"
 dpkg-deb --build --root-owner-group "$DATA_DIR" "styledscriptures-data_${VERSION}_all.deb"
 rm -rf "$DATA_DIR"
 echo "Built styledscriptures-data_${VERSION}_all.deb"

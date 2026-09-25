@@ -10,3 +10,10 @@ Description: Reuben Institute's Psalms and Parashot text
  typesetting of the Psalms (as poetry) and Parashot (as narrative
  prose) — the text behind the print booklets, web app, and video
  series.
+ .
+ Fixed reference data (parashah verse ranges) lives under
+ /usr/share/styledscriptures. Editable content (episode tracking,
+ psalm/parashah text) lives under /var/lib/styledscriptures and is
+ meant to be edited in place (e.g. via MediaStudio); it is
+ overwritten on package upgrade, so edits must be committed back to
+ the source repo first.
