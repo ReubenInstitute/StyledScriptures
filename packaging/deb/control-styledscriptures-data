@@ -1,0 +1,12 @@
+Package: styledscriptures-data
+Version: 0.12
+Section: python
+Priority: optional
+Architecture: all
+Depends: python3
+Maintainer: Reuben Institute <reubeninstitute@gmail.com>
+Description: Reuben Institute's Psalms and Parashot text
+ Markdown text and CSV metadata for Reuben Institute's own
+ typesetting of the Psalms (as poetry) and Parashot (as narrative
+ prose) — the text behind the print booklets, web app, and video
+ series.

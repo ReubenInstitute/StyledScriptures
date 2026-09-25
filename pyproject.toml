@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "StyledScriptures"
+version = "0.12"
+description = "Psalms and Parashot, typeset by Reuben Institute as poetry and narrative prose with print-quality typography, presented consistently across print, web, and video"
+readme = { text = "Psalms and Parashot, typeset by Reuben Institute as poetry and narrative prose with print-quality typography, presented consistently across print, web, and video.", content-type = "text/plain" }
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.8"
+dependencies = [
+    "Hebrew",
+    "pandas",
+]
+
+[tool.setuptools]
+py-modules = ["Text", "Psalms", "Parashot"]
