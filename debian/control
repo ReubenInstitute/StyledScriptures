@@ -1,0 +1,39 @@
+Source: styledscriptures
+Section: python
+Priority: optional
+Maintainer: Reuben Institute <reubeninstitute@gmail.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+
+Package: python3-styledscriptures
+Architecture: all
+Depends: ${misc:Depends}, python3, python3-hebrew, python3-pandas
+Description: Classes for Reuben Institute's Psalms and Parashot text
+ Text, Psalms, and Parashot classes that present Reuben Institute's
+ own typesetting of the Psalms (as poetry) and Parashot (as narrative
+ prose), with print-quality typography (curly single/double quotes,
+ proper punctuation) — the same text across print, web app, and
+ social media video.
+
+Package: styledscriptures-data
+Architecture: all
+Depends: ${misc:Depends}, python3
+Description: Reuben Institute's Psalms and Parashot text
+ Markdown text and CSV metadata for Reuben Institute's own
+ typesetting of the Psalms (as poetry) and Parashot (as narrative
+ prose) — the text behind the print booklets, web app, and video
+ series.
+ .
+ Fixed reference data (parashah verse ranges) lives under
+ /usr/share/styledscriptures. Editable content (episode tracking,
+ psalm/parashah text) lives under /var/lib/styledscriptures and is
+ meant to be edited in place (e.g. via MediaStudio); it is
+ overwritten on package upgrade, so edits must be committed back to
+ the source repo first.
+
+Package: styledscriptures-web
+Architecture: all
+Depends: ${misc:Depends}, python3, python3-flask, python3-styledscriptures, styledscriptures-data, fonts
+Description: Web viewer for Reuben Institute's styled scripture text
+ Flask app for browsing Reuben Institute's own typesetting of the
+ Psalms and Parashot in the browser.

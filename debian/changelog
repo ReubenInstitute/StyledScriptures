@@ -1,0 +1,8 @@
+styledscriptures (0.18) unstable; urgency=medium
+
+  * Switch packaging from packaging/deb/ (dpkg-deb --build) to a proper
+    debian/ source package (dpkg-buildpackage) building all three
+    binaries (python3-styledscriptures, styledscriptures-data,
+    styledscriptures-web) with debhelper.
+
+ -- Reuben Institute <reubeninstitute@gmail.com>  Sat, 26 Sep 2026 21:14:59 +0300

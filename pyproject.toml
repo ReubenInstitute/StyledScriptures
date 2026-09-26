@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "StyledScriptures"
-version = "0.16"
+version = "0.18"
 description = "Psalms and Parashot, typeset by Reuben Institute as poetry and narrative prose with print-quality typography, presented consistently across print, web, and video"
 readme = { text = "Psalms and Parashot, typeset by Reuben Institute as poetry and narrative prose with print-quality typography, presented consistently across print, web, and video.", content-type = "text/plain" }
 license = "GPL-3.0-or-later"

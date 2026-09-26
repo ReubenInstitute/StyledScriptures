@@ -1,0 +1,6 @@
+parashot.csv usr/share/styledscriptures/csv
+episodes.csv var/lib/styledscriptures/csv
+parashot.md var/lib/styledscriptures
+psalms.md var/lib/styledscriptures
+text/psalms/*.md var/lib/styledscriptures/psalms
+text/parashot/*.md var/lib/styledscriptures/parashot
